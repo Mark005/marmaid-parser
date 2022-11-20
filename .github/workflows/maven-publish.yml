@@ -39,7 +39,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Deploy with Maven
-        run: sh increase-version.sh
+        run: sh $GITHUB_WORKSPACE/.github/workflows/increase-version.sh
         env:
           USER_NAME: ${{ secrets.USER_NAME }}
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
