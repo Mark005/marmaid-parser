@@ -132,4 +132,13 @@
       </plugin>
     </plugins>
   </build>
+
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Mermaid parser Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/Mark005/mermaid-parser</url>
+    </repository>
+  </distributionManagement>
+
 </project>
