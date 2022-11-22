@@ -65,7 +65,7 @@ jobs:
         run: mvn -B package --file pom.xml
 
       - name: CHECK
-        run: echo ${{ secrets.ACCESS_TOKEN }}
+        run: git log --graph --oneline --all
 
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy -s $GITHUB_WORKSPACE/.github/workflows/maven-settings.xml
