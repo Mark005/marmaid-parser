@@ -39,7 +39,7 @@ jobs:
 #          distribution: 'adopt'
 #
 #      - name: Deploy with Maven
-#        run: sh $GITHUB_WORKSPACE/.github/workflows/increase-version.sh
+#        run: sh $GITHUB_WORKSPACE/.github/workflows/create-branch-and-tag-commit.sh
 #        env:
 #          USER_NAME: ${{ secrets.USER_NAME }}
 #          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
@@ -66,6 +66,9 @@ jobs:
 
       - name: CHECK
         run: git log --graph --oneline --all
+
+      - name: Create branch and create commit and tag for version
+        run: sh $GITHUB_WORKSPACE/.github/workflows/create-branch-and-tag-commit.sh
 
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy -s $GITHUB_WORKSPACE/.github/workflows/maven-settings.xml
