@@ -42,7 +42,7 @@ jobs:
       #          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Create branch and create commit and tag for version
-        run: sh echo "$FULL_VERSION"
+        run: echo $FULL_VERSION
 
       - name: Create Release
         id: create_release
