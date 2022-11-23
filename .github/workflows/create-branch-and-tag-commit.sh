@@ -8,5 +8,4 @@ git checkout -b "release/v${FULL_VERSION}"
 git commit -m "release v${FULL_VERSION}"
 git tag -a -m "Releasing version ${FULL_VERSION}" "v${FULL_VERSION}"
 
-git config --get remote.origin.url
 git push origin --all
