@@ -49,10 +49,10 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ env.FULL_VERSION }}
-          release_name: Release ${{ env.FULL_VERSION }}
+          tag_name: ${{ steps.set_version_number.outputs.full_version }}
+          release_name: Release ${{ steps.set_version_number.outputs.full_version }}
           body: |
-            Release v${{ env.FULL_VERSION }}
+            Release v${{ steps.set_version_number.outputs.full_version }}
           draft: false
           prerelease: false
         env:
