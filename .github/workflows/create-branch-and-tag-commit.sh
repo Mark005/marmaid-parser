@@ -1,6 +1,7 @@
 #!/bin/bash
 
 FULL_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+echo "full_version=${FULL_VERSION}" >> $GITHUB_OUTPUT
 
 git config --global user.email "git.action@github.com"
 git config --global user.name "CI Action"
