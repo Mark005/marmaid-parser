@@ -5,7 +5,6 @@ on:
     branches:
       - '*'
 
-
 jobs:
 #  build:
 #    runs-on: ubuntu-latest
@@ -35,12 +34,6 @@ jobs:
       - name: Create branch and create commit and tag for version
         id: set_version_number
         run: sh $GITHUB_WORKSPACE/.github/workflows/create-branch-and-tag-commit.sh
-
-      #      - name: Publish to GitHub Packages
-      #        run: mvn deploy -s $GITHUB_WORKSPACE/.github/workflows/maven-settings.xml
-      #        env:
-      #          USER_NAME: ${{ secrets.USER_NAME }}
-      #          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Test
         run: echo ${{ steps.set_version_number.outputs.full_version }}
