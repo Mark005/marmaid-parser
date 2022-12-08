@@ -1,4 +1,4 @@
-name: Release version
+name: Test before push
 
 on:
   push:
