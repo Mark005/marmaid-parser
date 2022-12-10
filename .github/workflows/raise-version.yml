@@ -1,0 +1,109 @@
+name: Rise version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+        type: choice
+        options:
+          - fix
+          - minor
+          - major
+        default: 'minor'
+
+jobs:
+
+  release-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Test before start
+        run: |
+          mvn -s $GITHUB_WORKSPACE/.github/workflows/maven-settings.xml -B clean package --file pom.xml
+        env:
+          USER_NAME: ${{ secrets.USER_NAME }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          NEW_VERSION: ${{ steps.set_version_number.outputs.NEW_VERSION }}
+
+      - name: Increase version
+        id: set_version_number
+        run: |
+          SNAPSHOT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo $SNAPSHOT_VERSION
+          VERSION=${SNAPSHOT_VERSION%"-SNAPSHOT"}
+          echo "$VERSION"
+
+          IFS='.'
+
+          read -a versions <<< "$VERSION"
+          echo "fix version : ${versions[0]}"
+          echo "minor version : ${versions[1]}"
+          echo "major version : ${versions[2]}"
+
+          echo "Selected: ${{ inputs.version }}"
+
+          if [  "${{ inputs.version }}"  == "fix" ]; then
+            NEW_VERSION="${versions[0]}.${versions[1]}.$((versions[2]+1))"
+          fi
+
+          if [ ${{ inputs.version }} == "minor" ]; then
+            NEW_VERSION="${versions[0]}.$((versions[1]+1)).0"
+          fi
+
+          if [ ${{ inputs.version }} == "major" ]; then
+            NEW_VERSION="$((versions[0]+1)).0.0"
+          fi
+          
+          echo "$NEW_VERSION"
+          
+          git config --global user.email "git.action@github.com"
+          git config --global user.name "CI Action"
+          git checkout -b "release/${NEW_VERSION}"
+          
+          mvn versions:set -DgenerateBackupPoms=false -DnewVersion="$NEW_VERSION"
+          
+          git add .
+          git commit -m "release v${NEW_VERSION}"
+          git push origin --all
+
+          echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Test
+        run: echo ${{ steps.set_version_number.outputs.NEW_VERSION }}
+
+      - name: Publish to GitHub Packages
+        run: mvn deploy -s $GITHUB_WORKSPACE/.github/workflows/maven-settings.xml
+        env:
+          USER_NAME: ${{ secrets.USER_NAME }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Create release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.set_version_number.outputs.NEW_VERSION }}
+          release_name: Release ${{ steps.set_version_number.outputs.NEW_VERSION }}
+          body: |
+            Release v${{ steps.set_version_number.outputs.NEW_VERSION }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Change master version
+        run: |
+          git checkout master
+
+          mvn versions:set -DgenerateBackupPoms=false -DnewVersion="$NEW_VERSION-SNAPSHOT"
+
+          git add .
+          git commit -m "increase version $NEW_VERSION"
+          git push origin --all
+        env:
+          NEW_VERSION: ${{ steps.set_version_number.outputs.NEW_VERSION }}
