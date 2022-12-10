@@ -1,13 +1,13 @@
-package com.bmo.parsers.parser;
+package com.bmo.parsers.marmaiddiagram.parser;
 
-import com.bmo.parsers.exception.MermaidDiagramParsingException;
-import com.bmo.parsers.model.DiagramConstants;
-import com.bmo.parsers.model.DiagramConstants.Arrow;
-import com.bmo.parsers.model.DiagramElement;
-import com.bmo.parsers.model.DiagramElement.Type;
-import com.bmo.parsers.model.MermaidDiagram;
-import com.bmo.parsers.model.Transition;
-import com.bmo.parsers.model.Triple;
+import com.bmo.parsers.marmaiddiagram.exception.MermaidDiagramParsingException;
+import com.bmo.parsers.marmaiddiagram.model.DiagramElement;
+import com.bmo.parsers.marmaiddiagram.model.DiagramElement.Type;
+import com.bmo.parsers.marmaiddiagram.model.DiagramConstants;
+import com.bmo.parsers.marmaiddiagram.model.DiagramConstants.Arrow;
+import com.bmo.parsers.marmaiddiagram.model.MermaidDiagram;
+import com.bmo.parsers.marmaiddiagram.model.Transition;
+import com.bmo.parsers.marmaiddiagram.model.Triple;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

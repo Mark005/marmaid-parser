@@ -1,4 +1,4 @@
-package com.bmo.parsers.exception;
+package com.bmo.parsers.marmaiddiagram.exception;
 
 public class MermaidDiagramParsingException extends RuntimeException {
 

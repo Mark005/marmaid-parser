@@ -1,8 +1,8 @@
-package com.bmo.parsers.parser;
+package com.bmo.parsers.marmaiddiagram.parser;
 
-import com.bmo.parsers.exception.MermaidDiagramParsingException;
-import com.bmo.parsers.model.DiagramConstants;
-import com.bmo.parsers.model.MermaidDiagram;
+import com.bmo.parsers.marmaiddiagram.exception.MermaidDiagramParsingException;
+import com.bmo.parsers.marmaiddiagram.model.DiagramConstants;
+import com.bmo.parsers.marmaiddiagram.model.MermaidDiagram;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;

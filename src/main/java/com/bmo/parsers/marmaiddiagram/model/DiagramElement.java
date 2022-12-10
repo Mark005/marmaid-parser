@@ -1,4 +1,4 @@
-package com.bmo.parsers.model;
+package com.bmo.parsers.marmaiddiagram.model;
 
 import java.util.ArrayList;
 import java.util.List;

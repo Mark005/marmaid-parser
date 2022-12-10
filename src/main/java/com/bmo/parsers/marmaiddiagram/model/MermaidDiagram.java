@@ -1,6 +1,6 @@
-package com.bmo.parsers.model;
+package com.bmo.parsers.marmaiddiagram.model;
 
-import com.bmo.parsers.model.DiagramElement.Type;
+import com.bmo.parsers.marmaiddiagram.model.DiagramElement.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

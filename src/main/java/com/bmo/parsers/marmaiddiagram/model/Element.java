@@ -1,4 +1,4 @@
-package com.bmo.parsers.model;
+package com.bmo.parsers.marmaiddiagram.model;
 
 public interface Element {
   String getName();

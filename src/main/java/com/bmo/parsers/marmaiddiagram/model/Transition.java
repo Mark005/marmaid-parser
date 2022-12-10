@@ -1,4 +1,4 @@
-package com.bmo.parsers.model;
+package com.bmo.parsers.marmaiddiagram.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

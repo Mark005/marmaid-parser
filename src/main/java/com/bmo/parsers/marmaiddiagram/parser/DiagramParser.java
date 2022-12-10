@@ -1,6 +1,6 @@
-package com.bmo.parsers.parser;
+package com.bmo.parsers.marmaiddiagram.parser;
 
-import com.bmo.parsers.model.MermaidDiagram;
+import com.bmo.parsers.marmaiddiagram.model.MermaidDiagram;
 import java.util.List;
 
 public interface DiagramParser {

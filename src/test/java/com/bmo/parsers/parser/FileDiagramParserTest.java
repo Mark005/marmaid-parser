@@ -1,6 +1,7 @@
 package com.bmo.parsers.parser;
 
-import com.bmo.parsers.model.MermaidDiagram;
+import com.bmo.parsers.marmaiddiagram.model.MermaidDiagram;
+import com.bmo.parsers.marmaiddiagram.parser.FileDiagramParser;
 import org.junit.jupiter.api.Test;
 
 class FileDiagramParserTest {
