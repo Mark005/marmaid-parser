@@ -6,7 +6,7 @@
 
   <groupId>com.bmo.parsers</groupId>
   <artifactId>mermaid-parser</artifactId>
-  <version>0.0.0-SNAPSHOT</version>
+  <version>0.1.0</version>
 
   <name>mermaid-parser</name>
 
