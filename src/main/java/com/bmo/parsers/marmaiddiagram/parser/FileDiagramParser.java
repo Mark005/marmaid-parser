@@ -3,8 +3,13 @@ package com.bmo.parsers.marmaiddiagram.parser;
 import com.bmo.parsers.marmaiddiagram.exception.MermaidDiagramParsingException;
 import com.bmo.parsers.marmaiddiagram.model.DiagramConstants;
 import com.bmo.parsers.marmaiddiagram.model.MermaidDiagram;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,12 +17,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 public class FileDiagramParser {
 
-  private Path path;
+  private String path;
+  private List<String> content;
   private DiagramParser diagramParser;
 
   public FileDiagramParser(String path) {
@@ -25,9 +32,14 @@ public class FileDiagramParser {
   }
 
   public FileDiagramParser(String path, DiagramParser diagramParser) {
-    try {
-      this.path = Paths.get(Objects.requireNonNull(getClass().getResource(path)).toURI());
-    } catch (URISyntaxException e) {
+    try (InputStream in = getClass().getResourceAsStream(path)) {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+      this.path = path;
+      content = reader.lines().collect(Collectors.toList());
+      System.out.println("\n\n\n\n" + this.path);
+      System.out.println("\n\n\n\n" + content);
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
 
@@ -35,8 +47,8 @@ public class FileDiagramParser {
   }
 
   public MermaidDiagram parse() {
-    List<String> lines = getFileAsStrings();
-    
+    List<String> lines = content;
+
     List<String> rawDiagramStrings = getDiagramBody(lines);
 
     MermaidDiagram diagram = diagramParser.parse(rawDiagramStrings);
@@ -83,16 +95,16 @@ public class FileDiagramParser {
         .collect(Collectors.toList());
   }
 
-  private List<String> getFileAsStrings() {
-    try {
-      return Files.readAllLines(path);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
+//  private List<String> getFileAsStrings() {
+//    try {
+//      return Files.readAllLines(path);
+//    } catch (IOException e) {
+//      throw new RuntimeException(e);
+//    }
+//  }
 
   private String getFilenameWithoutExtension() {
-    String fileNameWithExtension = path.getFileName().toString();
+    String fileNameWithExtension = path.substring(path.lastIndexOf("/"), path.length() - 1);
     return fileNameWithExtension.substring(0, fileNameWithExtension.lastIndexOf("."));
   }
 }
